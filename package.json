@@ -2,7 +2,7 @@
   "name": "@ariswap/v3-staker",
   "description": "Canonical liquidity mining contract for Ariswap V3",
   "license": "GPL-3.0-or-later",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://uniswap.org",
   "keywords": [
     "uniswap",
@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "3.4.1-solc-0.7-2",
-    "@ariswap/v3-core": "1.0.1",
-    "@ariswap/v3-periphery": "^1.0.1"
+    "@ariswap/v3-core": "1.0.2",
+    "@ariswap/v3-periphery": "^1.4.4"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
