@@ -35,7 +35,7 @@ jobs:
       - name: Compile
         run: yarn compile
 
-      # - name: Compile Uniswap V3 types
+      # - name: Compile Ariswap V3 types
       #   run: yarn compile-uniswap-contract-types
 
       - name: Run tests

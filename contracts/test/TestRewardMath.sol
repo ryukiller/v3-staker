@@ -2,7 +2,7 @@
 pragma solidity =0.7.6;
 pragma abicoder v2;
 
-import '../interfaces/IUniswapV3Staker.sol';
+import '../interfaces/IAriswapV3Staker.sol';
 
 import '../libraries/RewardMath.sol';
 

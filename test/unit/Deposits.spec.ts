@@ -1,7 +1,7 @@
 import { constants, BigNumberish, Wallet } from 'ethers'
 import { LoadFixtureFunction } from '../types'
 import { ethers } from 'hardhat'
-import { uniswapFixture, mintPosition, UniswapFixtureType } from '../shared/fixtures'
+import { uniswapFixture, mintPosition, AriswapFixtureType } from '../shared/fixtures'
 import {
   expect,
   getMaxTick,
@@ -34,7 +34,7 @@ describe('unit/Deposits', () => {
   const Time = createTimeMachine(provider)
   let helpers: HelperCommands
   const incentiveCreator = actors.incentiveCreator()
-  let context: UniswapFixtureType
+  let context: AriswapFixtureType
 
   before('loader', async () => {
     loadFixture = createFixtureLoader(provider.getWallets(), provider)
@@ -321,7 +321,7 @@ describe('unit/Deposits', () => {
       it('reverts when called by contract other than uniswap v3 nonfungiblePositionManager', async () => {
         await expect(
           context.staker.connect(lpUser0).onERC721Received(incentiveCreator.address, lpUser0.address, 1, data)
-        ).to.be.revertedWith('UniswapV3Staker::onERC721Received: not a univ3 nft')
+        ).to.be.revertedWith('AriswapV3Staker::onERC721Received: not a univ3 nft')
       })
 
       it('reverts when staking on invalid incentive', async () => {
@@ -344,7 +344,7 @@ describe('unit/Deposits', () => {
               tokenId,
               invalidData
             )
-        ).to.be.revertedWith('UniswapV3Staker::stakeToken: non-existent incentive')
+        ).to.be.revertedWith('AriswapV3Staker::stakeToken: non-existent incentive')
       })
     })
   })
@@ -388,7 +388,7 @@ describe('unit/Deposits', () => {
       it('you are withdrawing a token that is not yours', async () => {
         const notOwner = actors.traderUser1()
         await expect(context.staker.connect(notOwner).withdrawToken(tokenId, notOwner.address, '0x')).to.revertedWith(
-          'UniswapV3Staker::withdrawToken: only owner can withdraw token'
+          'AriswapV3Staker::withdrawToken: only owner can withdraw token'
         )
       })
 
@@ -412,7 +412,7 @@ describe('unit/Deposits', () => {
         )
 
         await expect(subject(tokenId, lpUser0.address)).to.revertedWith(
-          'UniswapV3Staker::withdrawToken: cannot withdraw token while staked'
+          'AriswapV3Staker::withdrawToken: cannot withdraw token while staked'
         )
       })
     })
@@ -441,13 +441,13 @@ describe('unit/Deposits', () => {
 
     it('can only be called by the owner', async () => {
       await expect(context.staker.connect(lpUser1).transferDeposit(tokenId, lpUser1.address)).to.be.revertedWith(
-        'UniswapV3Staker::transferDeposit: can only be called by deposit owner'
+        'AriswapV3Staker::transferDeposit: can only be called by deposit owner'
       )
     })
 
     it('cannot be transferred to address 0', async () => {
       await expect(context.staker.connect(lpUser0).transferDeposit(tokenId, constants.AddressZero)).to.be.revertedWith(
-        'UniswapV3Staker::transferDeposit: invalid transfer recipient'
+        'AriswapV3Staker::transferDeposit: invalid transfer recipient'
       )
     })
 

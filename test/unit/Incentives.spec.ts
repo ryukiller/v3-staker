@@ -1,5 +1,5 @@
 import { LoadFixtureFunction } from '../types'
-import { uniswapFixture, UniswapFixtureType } from '../shared/fixtures'
+import { uniswapFixture, AriswapFixtureType } from '../shared/fixtures'
 import {
   expect,
   getMaxTick,
@@ -30,7 +30,7 @@ describe('unit/Incentives', async () => {
   const Time = createTimeMachine(provider)
 
   let helpers: HelperCommands
-  let context: UniswapFixtureType
+  let context: AriswapFixtureType
   let timestamps: ContractParams.Timestamps
 
   before('loader', async () => {
@@ -208,7 +208,7 @@ describe('unit/Incentives', async () => {
           expect(now).to.be.lessThan(params.endTime, 'test setup: after end time')
 
           await expect(subject(params)).to.be.revertedWith(
-            'UniswapV3Staker::createIncentive: start time must be now or in the future'
+            'AriswapV3Staker::createIncentive: start time must be now or in the future'
           )
         })
 
@@ -216,14 +216,14 @@ describe('unit/Incentives', async () => {
           const params = makeTimestamps(await blockTimestamp())
           params.endTime = params.startTime - 10
           await expect(subject(params)).to.be.revertedWith(
-            'UniswapV3Staker::createIncentive: start time must be before end time'
+            'AriswapV3Staker::createIncentive: start time must be before end time'
           )
         })
 
         it('start time is too far into the future', async () => {
           const params = makeTimestamps((await blockTimestamp()) + 2 ** 32 + 1)
           await expect(subject(params)).to.be.revertedWith(
-            'UniswapV3Staker::createIncentive: start time too far into future'
+            'AriswapV3Staker::createIncentive: start time too far into future'
           )
         })
 
@@ -231,7 +231,7 @@ describe('unit/Incentives', async () => {
           const params = makeTimestamps(await blockTimestamp())
           params.endTime = params.startTime + 2 ** 32 + 1
           await expect(subject(params)).to.be.revertedWith(
-            'UniswapV3Staker::createIncentive: incentive duration is too long'
+            'AriswapV3Staker::createIncentive: incentive duration is too long'
           )
         })
       })
@@ -250,7 +250,7 @@ describe('unit/Incentives', async () => {
               },
               BNe18(0)
             )
-          ).to.be.revertedWith('UniswapV3Staker::createIncentive: reward must be positive')
+          ).to.be.revertedWith('AriswapV3Staker::createIncentive: reward must be positive')
         })
       })
     })
@@ -316,7 +316,7 @@ describe('unit/Incentives', async () => {
       it('block.timestamp <= end time', async () => {
         await Time.set(timestamps.endTime - 10)
         await expect(subject({})).to.be.revertedWith(
-          'UniswapV3Staker::endIncentive: cannot end incentive before end time'
+          'AriswapV3Staker::endIncentive: cannot end incentive before end time'
         )
       })
 
@@ -327,7 +327,7 @@ describe('unit/Incentives', async () => {
           subject({
             startTime: (await blockTimestamp()) + 1000,
           })
-        ).to.be.revertedWith('UniswapV3Staker::endIncentive: no refund available')
+        ).to.be.revertedWith('AriswapV3Staker::endIncentive: no refund available')
       })
 
       it('incentive has stakes', async () => {
@@ -345,7 +345,7 @@ describe('unit/Incentives', async () => {
         // Adjust the block.timestamp so it is after the claim deadline
         await Time.set(timestamps.endTime + 1)
         await expect(subject({})).to.be.revertedWith(
-          'UniswapV3Staker::endIncentive: cannot end incentive while deposits are staked'
+          'AriswapV3Staker::endIncentive: cannot end incentive while deposits are staked'
         )
       })
     })

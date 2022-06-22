@@ -23,7 +23,7 @@ export class ActorFixture {
     this.wallets = wallets
     this.provider = provider
   }
-  /* EOA that owns all Uniswap-related contracts */
+  /* EOA that owns all Ariswap-related contracts */
 
   /* EOA that mints and transfers WETH to test accounts */
   wethOwner() {

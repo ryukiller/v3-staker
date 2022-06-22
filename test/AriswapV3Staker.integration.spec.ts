@@ -222,7 +222,7 @@ describe('integration', async () => {
          *
          * So that's (1/3)*(1/2)*3000e18 = ~50e18
          */
-        // Uniswap/uniswap-v3-staker#144
+        // Ariswap/uniswap-v3-staker#144
         expect(unstakes[0].balance).to.beWithin(BNe(1, 15), BN('499989197530864021534'))
 
         // Now the other two LPs hold off till the end and unstake
@@ -306,7 +306,7 @@ describe('integration', async () => {
             createIncentiveResult,
           })
 
-          // Uniswap/uniswap-v3-staker#144
+          // Ariswap/uniswap-v3-staker#144
           expect(lpUser0Balance).to.beWithin(BNe(1, 12), BN('749985223767771705507'))
         })
       })
